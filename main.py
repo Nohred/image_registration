@@ -81,26 +81,34 @@ def main():
     print(f"Traslación x: {best_params[2]:.2f} px")
     print(f"Traslación y: {best_params[3]:.2f} px")
     print(f"Error cuadrático medio: {best_score:.6f}")
-
+    print(f"Diferencia de error: {abs(best_score - objective_function([0, 1, 0, 0], img_ref, img_mov)):.6f}")
+    print("Transformación afín aplicada.")
+ 
     # Transformar imagen con mejores parámetros
     result = apply_affine_transform(img_mov, *best_params)
 
     # Mostrar resultados
-    plt.figure(figsize=(10, 4))
-    plt.subplot(1, 3, 1)
+    plt.figure(figsize=(15, 4))
+    plt.subplot(1, 4, 1)
     plt.title("Referencia")
     plt.imshow(img_ref, cmap='gray')
     plt.axis('off')
 
-    plt.subplot(1, 3, 2)
+    plt.subplot(1, 4, 2)
     plt.title("Movida")
     plt.imshow(img_mov, cmap='gray')
     plt.axis('off')
 
-    plt.subplot(1, 3, 3)
+    plt.subplot(1, 4, 3)
     plt.title("Registrada")
     plt.imshow(result, cmap='gray')
     plt.axis('off')
+
+    plt.subplot(1, 4, 4)
+    plt.title("Diferencia")
+    plt.imshow(np.abs(img_ref - result), cmap='gray')
+    plt.axis('off')
+    plt.colorbar()
 
     plt.tight_layout()
     plt.show()
